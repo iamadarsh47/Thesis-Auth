@@ -89,9 +89,7 @@ contract AuthenticationContract{
         FogDeviceAllMappingDeleted(fog,msg.sender);   }
     
     event AdminDeleted(address newAdmin, address deletingAdmin); 
-
     event UserDeviceAllMappingDeleted(address user,  address deletingAdmin);
-
     event FogDeviceAllMappingDeleted(address fog, address deletingAdmin);
 
 
