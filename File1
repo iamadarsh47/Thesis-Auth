@@ -94,7 +94,6 @@ contract AuthenticationContract{
 
 
     function requestAuthentication(address device,address fog) public { 
-       
         bool deviceExists=false;
         for(uint256 i = 0; i<fog_devices[fog].length; i++){
             if(fog_devices[fog][i]==device){ // check the devices of a user
@@ -103,15 +102,13 @@ contract AuthenticationContract{
                 break; }
         }
         if(!deviceExists){
-          
-            DeviceDoesnotExist(device,fog,msg.sender); }
+          DeviceDoesnotExist(device,fog,msg.sender); }
         else{
             bool auth=false;
             for(uint256 m = 0; m<users_devices[msg.sender].length; m++){
                 if(users_devices[msg.sender][m].dev==device){ 
-               
                     auth=true;
-                    break; }
+                     break; }
             }
             if(auth){ 
                 Authenticated(msg.sender,device,fog);
@@ -119,8 +116,7 @@ contract AuthenticationContract{
                 Tokens.push(Token(UID,msg.sender,device,fog));
                 TokenCreated(UID,msg.sender,device,fog); }
             else if(!auth){
-               
-                NotAuthenticated(msg.sender); }
+                 NotAuthenticated(msg.sender); }
         }
     }
     event Authenticated(address user, address device, address fog); 
