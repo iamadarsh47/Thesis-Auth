@@ -36,22 +36,17 @@ contract AuthenticationContract{
         admins.push(msg.sender); //creater of contract is the first admin
     }
     
-    function addAdmin(address newAdmin) public onlyAdmin{ 
+     function addAdmin(address newAdmin) public onlyAdmin{ 
         admins.push(newAdmin);
         AdminAdded(newAdmin,msg.sender);
     }
-   
-    function addUserDeviceMapping(address user, address device,address fog) 
-                                                             public onlyAdmin{ 
-        
-        bool deviceExists=false;
+    
+    function addUserDeviceMapping(address user, address device,address fog)  public onlyAdmin{ 
+         bool deviceExists=false;
         for(uint256 i = 0; i<fog_devices[fog].length; i++){
-        
-        if(fog_devices[fog][i]==device){ // check the devices of a user
-        
-              
-                deviceExists=true;
-                break;   }
+         if(fog_devices[fog][i]==device){
+             deviceExists=true;
+              break;   }
         }
         if(deviceExists){
             users_devices[user].push(Devices(device,fog));
@@ -62,7 +57,6 @@ contract AuthenticationContract{
             }
   
     function addDeviceFogMapping(address fog, address device) public onlyAdmin{ 
-      
         fog_devices[fog].push(device);
         FogDeviceMappingAdded(fog,device,msg.sender);
     }   
