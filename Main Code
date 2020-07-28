@@ -22,6 +22,7 @@ contract AuthenticationContract{
         string email;  
     }
     string[] public userTemplates;
+     mapping (string => UserData) private users;
     
       function addUser(string memory name, address memory user, string memory email, , string memory template) public {
         UserData memory newUser = UserData(name, user, email);
@@ -41,7 +42,7 @@ contract AuthenticationContract{
     function getTemplatesSize() public view returns(uint) {
         return userTemplates.length;
     }
-   mapping (string => UserData) private users;
+  
    
     Token [] public Tokens ; 
     mapping (address => Devices[]) public users_devices;
