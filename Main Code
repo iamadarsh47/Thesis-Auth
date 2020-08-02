@@ -24,22 +24,22 @@ contract AuthenticationContract{
     string[] public userTemplates;
      mapping (string => UserData) private users;
     
-      function addUser(string memory name, address memory user, string memory email, , string memory template) public {
+      function addUser(string memory name, address memory user, string memory email, , string memory template) private onlyAdmin {
         UserData memory newUser = UserData(name, user, email);
         userTemplates.push(template);
         users[template] = newUser;
     }
 
-    function editUser(string memory name, address memory user, string memory email, string memory template) public{
+    function editUser(string memory name, address memory user, string memory email, string memory template) private onlyAdmin{
         users[template].name = name;
         users[template].user = user;
         users[template].email = email;
        
     }
-    function getUser(string memory key) public view returns(string memory name, address memory user string memory email) {
+    function getUser(string memory key) private view returns(string memory name, address memory user string memory email) {
         return (users[key].name, users[key].user , users[key].email,);
     }
-    function getTemplatesSize() public view returns(uint) {
+    function getTemplatesSize() private view returns(uint) {
         return userTemplates.length;
     }
   
@@ -159,16 +159,16 @@ contract AuthenticationContract{
         require(newOwner != address(0), "New owners address cannot be empty!");
 
         owner = newAdmin;
-        emit LogChangeAdmin(msg.sender, newAdmin);
+        LogChangeAdmin(msg.sender, newAdmin);
 
         return true;
 }
 event LogChangeAdmin(address originalAdmin, address newAdmin);
 
-function getAdmin(address user) public onlyAdmin view returns(address) {
+function getAdminUser(address user) public onlyAdmin view returns(address) {
         return admin[user];
         }
- function getAdmin(address fog) public onlyAdmin view returns(address) {
+ function getAdminFog(address fog) public onlyAdmin view returns(address) {
         return admin[fog];
         }
         
