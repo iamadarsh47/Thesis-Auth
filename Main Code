@@ -123,7 +123,7 @@ contract AuthenticationContract{
     event FogDeviceAllMappingDeleted(address fog, address deletingAdmin);
 
 
-    function requestAuthentication(address device,address fog) public { 
+    function requestAuthentication(address device,address fog, address user) public { 
         bool deviceExists=false;
         for(uint256 i = 0; i<fog_devices[fog].length; i++){
             if(fog_devices[fog][i]==device){ // check the devices of a user
