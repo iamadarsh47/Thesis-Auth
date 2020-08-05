@@ -24,20 +24,20 @@ contract AuthenticationContract{
     string[] public userTemplates;
      mapping (string => UserData) private users;
     
-      function addUser(string memory name, address memory user, string memory email, , string memory template) private onlyAdmin {
+      function addUser(string  name, address user, string  email,  string template) private onlyAdmin {
         UserData memory newUser = UserData(name, user, email);
         userTemplates.push(template);
         users[template] = newUser;
     }
 
-    function editUser(string memory name, address memory user, string memory email, string memory template) private onlyAdmin{
+    function editUser(string  name, address user, string  email, string template) private onlyAdmin{
         users[template].name = name;
         users[template].user = user;
         users[template].email = email;
        
     }
-    function getUser(string memory key) private view returns(string memory name, address memory user string memory email) {
-        return (users[key].name, users[key].user , users[key].email,);
+    function getUser(string key) private view returns(string  name, address user ,string  email) {
+        return (users[key].name, users[key].user , users[key].email);
     }
     function getTemplatesSize() private view returns(uint) {
         return userTemplates.length;
@@ -57,7 +57,7 @@ contract AuthenticationContract{
             }
         }
         if(!admin)
-            revert("The address does not belong to admin array");;
+            revert("The address does not belong to admin array");
         else
         _ ;
     }
@@ -99,7 +99,7 @@ contract AuthenticationContract{
     
      function delAdmin (address admin) public onlyAdmin{ 
         if(admins.length<2)
-            revert("You are trying to delete the only admin of the system.");;
+            revert("You are trying to delete the only admin of the system.");
         else {
             uint256 i = 0;
             while(i < admins.length){
@@ -143,9 +143,10 @@ contract AuthenticationContract{
             if(auth){ 
                 Authenticated(msg.sender,device,fog);
                 bytes32 UID= keccak256(device,fog,msg.sender,block.timestamp);
-                \\sha3(device,fog,msg.sender,block.timestamp)
+                sha3(device,fog,msg.sender,block.timestamp);
                 Tokens.push(Token(UID,msg.sender,device,fog));
-                TokenCreated(UID,msg.sender,device,fog); }
+                TokenCreated(UID,msg.sender,device,fog); 
+            }
             else if(!auth){
                  NotAuthenticated(msg.sender); }
         }
@@ -153,10 +154,11 @@ contract AuthenticationContract{
     event Authenticated(address user, address device, address fog); 
     event NotAuthenticated(address user);
     event TokenCreated(bytes32 uid, address user, address device, address fog);
-\\add here currently
 
+address newAdmin;
+address owner;
   function changeAdmin(address newAdmin) public onlyAdmin returns(bool) {
-        require(newOwner != address(0), "New owners address cannot be empty!");
+        require(newAdmin != address(0), "New owners address cannot be empty!");
 
         owner = newAdmin;
         LogChangeAdmin(msg.sender, newAdmin);
@@ -165,12 +167,7 @@ contract AuthenticationContract{
 }
 event LogChangeAdmin(address originalAdmin, address newAdmin);
 
-function getAdminUser(address user) public onlyAdmin view returns(address) {
-        return admin[user];
-        }
- function getAdminFog(address fog) public onlyAdmin view returns(address) {
-        return admin[fog];
-        }
+
         
         
     }
