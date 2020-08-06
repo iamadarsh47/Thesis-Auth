@@ -4,6 +4,8 @@ contract AuthenticationContract{
     uint256 count=0; 
 
     address [] admins; 
+     address [] users;
+     address [] fogs;
     
     struct Token{ 
         bytes32 UID;
@@ -24,24 +26,25 @@ contract AuthenticationContract{
     }
     
     string[] public userTemplates;
-     mapping (string => UserData) private users;
+     mapping (string => UserData) public users;
     
-      function addUser(string memory name, address memory user, string memory email, , string memory template) private onlyAdmin {
+      function addUser(string memory name, address memory user, string memory email, , string memory template) public onlyAdmin {
         UserData memory newUser = UserData(name, user, email);
         userTemplates.push(template);
         users[template] = newUser;
+         users.push(name,user,email,template);
     }
 
-    function editUser(string memory name, address memory user, string memory email, string memory template) private onlyAdmin{
+    function editUser(string memory name, address memory user, string memory email, string memory template) public onlyAdmin{
         users[template].name = name;
         users[template].user = user;
         users[template].email = email;
        
     }
-    function getUser(string memory key) private view returns(string memory name, address memory user string memory email) {
+    function getUser(string memory key) public view returns(string memory name, address memory user string memory email) {
         return (users[key].name, users[key].user , users[key].email,);
     }
-    function getTemplatesSize() private view returns(uint) {
+    function getTemplatesSize() public view returns(uint) {
         return userTemplates.length;
     }
   
