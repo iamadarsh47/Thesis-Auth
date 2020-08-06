@@ -4,6 +4,7 @@ contract AuthenticationContract{
     uint256 count=0; 
 
     address [] admins; 
+    
     struct Token{ 
         bytes32 UID;
         address user;
@@ -21,6 +22,7 @@ contract AuthenticationContract{
 
         string email;  
     }
+    
     string[] public userTemplates;
      mapping (string => UserData) private users;
     
